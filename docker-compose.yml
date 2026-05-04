@@ -1,0 +1,22 @@
+services:
+  gcp-vertex-rag-blueprint:
+    build: .
+    image: ghcr.io/ramdragneel01/gcp-vertex-rag-blueprint:dev
+    container_name: gcp-vertex-rag-blueprint
+    restart: unless-stopped
+    ports:
+      - "8093:8093"
+    environment:
+      GVRB_HOST: 0.0.0.0
+      GVRB_PORT: 8093
+      GVRB_LOG_LEVEL: INFO
+      GVRB_GCP_PROJECT_ID: ${GVRB_GCP_PROJECT_ID:-my-gcp-project}
+      GVRB_GCP_LOCATION: ${GVRB_GCP_LOCATION:-us-central1}
+      GVRB_VERTEX_DATA_STORE_ID: ${GVRB_VERTEX_DATA_STORE_ID:-vertex-rag-datastore-dev}
+      GVRB_MODEL_NAME: ${GVRB_MODEL_NAME:-gemini-1.5-pro}
+      GVRB_ENABLE_MOCK_BACKENDS: ${GVRB_ENABLE_MOCK_BACKENDS:-true}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8093/health',timeout=3).status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

@@ -1,0 +1,17 @@
+flowchart LR
+  User[Client]
+  API[FastAPI RAG Service]
+  RETR[Retriever Layer]
+  GEN[Generator Layer]
+  DS[Vertex AI Search Datastore]
+  GEM[Gemini Model]
+  GCS[GCS RAG Corpus Bucket]
+  IAM[Runtime Service Account]
+
+  User --> API
+  API --> RETR
+  RETR --> DS
+  DS --> GCS
+  API --> GEN
+  GEN --> GEM
+  IAM --> API

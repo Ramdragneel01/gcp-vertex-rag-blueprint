@@ -1,0 +1,11 @@
+{
+  "retrieve": {
+    "query": "How do we rotate API keys safely in production?",
+    "top_k": 4
+  },
+  "answer": {
+    "query": "How do we rotate API keys safely in production?",
+    "top_k": 4,
+    "include_sources": true
+  }
+}
